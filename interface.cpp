@@ -2,6 +2,8 @@
 #include "../interface.h"
 #include "gambatte.h"
 
+const char* test_file = "zz.gb";
+
 gambatte::GB gameboy;
 
 void module_init(const module_init_info_t *init_info, module_info_t *module_info)
@@ -11,10 +13,10 @@ void module_init(const module_init_info_t *init_info, module_info_t *module_info
 
    module_info->output_width = 160;
    module_info->output_height = 144;
-   module_info->screen_format = ARGB8888;
+   module_info->screen_format = screen_format_ARGB8888;
    module_info->stereo = true;
    module_info->framerate = 60;
-   module_info->audio_samples_per_frame = 35112;
+   module_info->audio_rate = 35112 * module_info->framerate;
 
    debug_log("module init\n");
 }

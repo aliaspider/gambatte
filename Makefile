@@ -62,9 +62,6 @@ FLAGS += -Ilibgambatte/src -Ilibgambatte/include -Icommon
 CFLAGS += $(FLAGS)
 CXXFLAGS += $(FLAGS) -fno-exceptions -fno-rtti
 
-LIBS += -lvulkan -lX11
-
-
 $(BUILD_DIR)/$(TARGET): $(OBJS) .lastbuild
 	touch .lastbuild
 	$(AR) rcs $@ $(OBJS)
@@ -85,7 +82,7 @@ $(BUILD_DIR)/%.o: %.cpp
 clean:
 #	rm -rf objs
 	rm -f $(OBJS) $(OBJS:.o=.depend)
-	rm -f $(BUILD_DIR)/$(TARGET) $(TARGET) vulkan/main.vert.inc vulkan/main.frag.inc .lastbuild
+	rm -f $(BUILD_DIR)/$(TARGET) $(TARGET) .lastbuild
 
 
 -include $(OBJS:.o=.depend)

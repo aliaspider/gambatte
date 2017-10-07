@@ -6,7 +6,6 @@ config.log
 *.gb
 *.gbc
 *.exe
-Makefile*
 *.Debug
 *.Release
 gambatte_sdl/gambatte_sdl

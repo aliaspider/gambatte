@@ -216,8 +216,10 @@ gambatte_sdl/src/sdlblitter.h
 gambatte_sdl/src/str_to_sdlkey.cpp
 gambatte_sdl/src/str_to_sdlkey.h
 gambatte_sdl/src/usec.cpp
+gambatte_test.config
+gambatte_test.files
+gambatte_test.includes
 interface.cpp
-interface.h
 libgambatte/SConstruct
 libgambatte/include/gambatte.h
 libgambatte/include/gbint.h

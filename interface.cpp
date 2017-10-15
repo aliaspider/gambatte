@@ -2,8 +2,6 @@
 #include "../interface.h"
 #include "gambatte.h"
 
-const char* test_file = "zz.gb";
-
 gambatte::GB gameboy;
 
 void module_init(const module_init_info_t *init_info, module_info_t *module_info)

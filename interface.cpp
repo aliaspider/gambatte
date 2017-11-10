@@ -3,34 +3,41 @@
 #include "gambatte.h"
 #include "inputgetter.h"
 
-namespace gambatte {
+namespace gambatte
+{
 static gambatte::GB gameboy;
 
-class CustomInputGetter : public InputGetter {
+class CustomInputGetter : public InputGetter
+{
 public:
-   pad_t* pad = NULL;
-   unsigned operator()() {
-      unsigned mask = 0;
-      if (pad)
+   pad_t *pad = NULL;
+   typedef union
+   {
+      struct
       {
-         if(pad->buttons.A)
-            mask |= A;
-         if(pad->buttons.B)
-            mask |= B;
-         if(pad->buttons.start)
-            mask |= START;
-         if(pad->buttons.select)
-            mask |= SELECT;
-         if(pad->buttons.up)
-            mask |= UP;
-         if(pad->buttons.down)
-            mask |= DOWN;
-         if(pad->buttons.left)
-            mask |= LEFT;
-         if(pad->buttons.right)
-            mask |= RIGHT;
-      }
-      return mask;
+         int A : 1;
+         int B : 1;
+         int select : 1;
+         int start : 1;
+         int right : 1;
+         int left : 1;
+         int up : 1;
+         int down : 1;
+      };
+      uint8_t mask;
+   } gb_pad_t;
+   unsigned operator()()
+   {
+      gb_pad_t gbpad;
+      gbpad.A      = pad->buttons.A;
+      gbpad.B      = pad->buttons.B;
+      gbpad.select = pad->buttons.select;
+      gbpad.start  = pad->buttons.start;
+      gbpad.right  = pad->buttons.right;
+      gbpad.left   = pad->buttons.left;
+      gbpad.up     = pad->buttons.up;
+      gbpad.down   = pad->buttons.down;
+      return gbpad.mask;
    }
 };
 static CustomInputGetter custom_input_getter;
@@ -63,8 +70,8 @@ void module_run(module_run_info_t *run_info)
 {
    std::size_t max_samples = run_info->max_samples;
    gambatte::custom_input_getter.pad = run_info->pad;
-   std::ptrdiff_t samples = gambatte::gameboy.runFor(run_info->screen.u32, run_info->pitch, run_info->sound_buffer.u32, max_samples);
-   gambatte::custom_input_getter.pad = NULL;
+   std::ptrdiff_t samples = gambatte::gameboy.runFor(run_info->screen.u32, run_info->pitch, run_info->sound_buffer.u32,
+                            max_samples);
    run_info->max_samples = max_samples;
    run_info->frame_completed = samples > 0;
 }
